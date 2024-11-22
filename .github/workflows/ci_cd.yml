@@ -47,12 +47,12 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{secrets.EC2_SSH_KEY}}
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       # Build and deploy Docker image on EC2
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@18.136.103.228 << EOF
+          ssh -o StrictHostKeyChecking=no ubuntu@52.221.129.110 << EOF
             cd /home/ubuntu/AWS_test
             git pull origin main
             sudo docker-compose down
