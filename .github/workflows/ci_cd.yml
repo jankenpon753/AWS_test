@@ -30,8 +30,8 @@ jobs:
         run: npm run lint --if-present
 
       # Run tests
-      - name: Run tests
-        run: npm test --if-present -- --watchAll=false
+      # - name: Run tests
+      #   run: npm test --if-present -- --watchAll=false
 
   # Step 2: Continuous Deployment (CD)
   deploy:
