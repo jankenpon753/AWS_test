@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 
 function App() {
-  const url = "http://api.hallfeast.com/api/v1/users";
+  const url = "http://api.hallfeast.com/api/v1/universities";
   const [data, setData] = useState([]);
 
   const fetchInfo = () => {
