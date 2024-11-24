@@ -1,9 +1,10 @@
 version: "3.8"
 
 services:
-  react-app:
+  react-app-release:
     build:
       context: .
+    container_name: app-release
     ports:
       - "3000:3000"  # Map port 3000 (React) to port 3000 (public access)
     restart: always

@@ -1,40 +1,46 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import React, { useState, useEffect } from "react";
 
 function App() {
-  const url = "http://api.hallfeast.com/api/v1/universities";
-  const [data, setData] = useState([]);
-
-  const fetchInfo = () => {
-    return fetch(url)
-      .then((res) => res.json())
-      .then((d) => setData(d));
-  };
+  const [count, setCount] = useState(0);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchInfo();
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://api.hallfeast.com/api/v1/universities"
+          // "https://api.hallfeast.com/api/v1/universities/bd4d26c3-f1fe-478b-ad9c-7a6f6930fca6/halls"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error.message);
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div style={{ color: "red" }}>{error}</div>;
+  }
+
   return (
-    <div className="App">
-      <h1 style={{ color: "green" }}>using JavaScript inbuilt FETCH API</h1>
-      <center>
-        {data.map((dataObj, index) => {
-          return (
-            <div
-              style={{
-                width: "15em",
-                backgroundColor: "#35D841",
-                padding: 2,
-                borderRadius: 10,
-                marginBlock: 10,
-              }}
-            >
-              <p style={{ fontSize: 20, color: "white" }}>{dataObj.name}</p>
-            </div>
-          );
-        })}
-      </center>
+    <div>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }
