@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  react-app-beta:
+    build:
+      context: .
+    container_name: app-beta
+    ports:
+      - "4001:4000"  # Map port 3000 (React) to port 3000 (public access)
+    restart: always

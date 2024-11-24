@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # Run workflow on changes to the main branch
+      - release
 
 jobs:
   # Step 1: Continuous Integration (CI)
@@ -50,11 +51,23 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       # Build and deploy Docker image on EC2
-      - name: Deploy to EC2
+      - name: Deploy release
+        if: github.ref == 'refs/heads/release'
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@52.221.129.110 << EOF
+            cd /home/ubuntu/AWS_test
+            git pull origin release
+            sudo docker-compose -f docker-compose.release.yml down
+            sudo docker-compose -f docker-compose.release.yml up --build -d
+          EOF
+
+      # Build and deploy Docker image on EC2
+      - name: Deploy beta
+        if: github.ref == 'refs/heads/main'
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@52.221.129.110 << EOF
             cd /home/ubuntu/AWS_test
             git pull origin main
-            sudo docker-compose down
-            sudo docker-compose up --build -d
+            sudo docker-compose -f docker-compose.beta.yml down
+            sudo docker-compose -f docker-compose.beta.yml up --build -d
           EOF
