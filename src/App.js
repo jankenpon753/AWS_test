@@ -11,7 +11,7 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://api.hallfeast.com/api/v1/universities"
+          "http://api.hallfeast.com/api/v1/universities"
           // "https://api.hallfeast.com/api/v1/universities/bd4d26c3-f1fe-478b-ad9c-7a6f6930fca6/halls"
         );
         if (!response.ok) {
