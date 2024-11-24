@@ -54,7 +54,7 @@ jobs:
       - name: Deploy release
         if: github.ref == 'refs/heads/release'
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@52.221.129.110 << EOF
+          ssh -o StrictHostKeyChecking=no ubuntu@47.130.50.123 << EOF
             cd /home/ubuntu/AWS_test
             git pull origin release
             sudo docker-compose -f docker-compose.release.yml down
@@ -65,7 +65,7 @@ jobs:
       - name: Deploy beta
         if: github.ref == 'refs/heads/main'
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@52.221.129.110 << EOF
+          ssh -o StrictHostKeyChecking=no ubuntu@47.130.50.123 << EOF
             cd /home/ubuntu/AWS_test
             git pull origin main
             sudo docker-compose -f docker-compose.beta.yml down
